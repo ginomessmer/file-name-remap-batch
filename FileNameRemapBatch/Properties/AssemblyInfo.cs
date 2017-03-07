@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FileNameRemapBatch")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("File Name Remapper")]
+[assembly: AssemblyDescription("Rename files based on mapping with ease")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FileNameRemapBatch")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCompany("ino Messmer")]
+[assembly: AssemblyProduct("File Name Remapper")]
+[assembly: AssemblyCopyright("Copyright ©  2017 - Gino Messmer")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -37,7 +37,7 @@ namespace FileNameRemapBatch
 
         private static void Run(List<Remap> mapping)
         {
-            WriteLine("File directory to fix:");
+            WriteLine("File directory to remap:");
             string path = ReadLine();
 
             // Check whether directory exists
@@ -59,7 +59,7 @@ namespace FileNameRemapBatch
                             string newPath = $"{currentFile.DirectoryName}\\{newName}";
 
                             // Do it
-                            WriteLine($"{DateTime.Now.ToShortTimeString()}: Renaming <{currentFile.Name}> to <{newPath}>");
+                            WriteLine($"Renaming <{currentFile.Name}> to <{newPath}>");
                             currentFile.MoveTo(newPath);
                         }
                     }
