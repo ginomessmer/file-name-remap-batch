@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FileNameRemapBatch.Data;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,15 +10,32 @@ namespace FileNameRemapBatch
 {
     public class Program
     {
-        public static Dictionary<string, string> ReplaceMap = new Dictionary<string, string>()
-        {
-            // old -> new
-            { "ü", "ue" },
-            { "ä", "ae" },
-            { "ö", "oe" }
-        };
-
         static void Main(string[] args)
+        {
+            Setup();
+
+            var mapping = JsonConvert.DeserializeObject<List<Remap>>(File.ReadAllText("mapping.json"));
+            Run(mapping);
+        }
+
+        private static void Setup()
+        {
+            if(!File.Exists("mapping.json"))
+            {
+                var remap = new List<Remap>()
+                {
+                    new Remap("ä", "ae"),
+                    new Remap("ö", "oe"),
+                    new Remap("ü", "ue"),
+                    new Remap("ß", "ss")
+                };
+
+                var remapJson = JsonConvert.SerializeObject(remap);
+                File.WriteAllText("mapping.json", remapJson, System.Text.Encoding.UTF8);
+            }
+        }
+
+        private static void Run(List<Remap> mapping)
         {
             WriteLine("File directory to fix:");
             string path = ReadLine();
@@ -30,13 +49,13 @@ namespace FileNameRemapBatch
                 foreach (var file in files)
                 {
                     FileInfo currentFile = new FileInfo(file);
-                    foreach (var map in ReplaceMap)
+                    foreach (var map in mapping)
                     {
                         // Check whether name contains chars in remap source
-                        if (currentFile.Name.Contains(map.Key))
+                        if (currentFile.Name.Contains(map.FromChar))
                         {
                             // Assign new name
-                            string newName = currentFile.Name.Replace(map.Key, map.Value);
+                            string newName = currentFile.Name.Replace(map.FromChar, map.ToChar);
                             string newPath = $"{currentFile.DirectoryName}\\{newName}";
 
                             // Do it
@@ -58,6 +77,7 @@ namespace FileNameRemapBatch
 
             // Exit
             Read();
+
         }
     }
 }
